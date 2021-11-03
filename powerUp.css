@@ -1,0 +1,24 @@
+.powerup{
+    border: 1px solid;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    position: absolute;
+}
+
+.powerup.health{
+    background-color: tomato;
+}
+.powerup.strength{
+    background-color: purple;
+}
+.powerup.size{
+    background-color:royalblue;
+}
+.powerup.color{
+    background-color:springgreen;
+}
+.powerup.speed{
+    background-color:powderblue;
+}

@@ -1,0 +1,115 @@
+* {
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #22272e;
+    overflow: overlay;
+    /*height: 100vh;*/
+    font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue", Arial,
+    "Noto Sans",
+    "Liberation Sans",
+    sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.noselect{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+
+.playerStatWrapper {
+    display: flex;
+    position: fixed;
+    top: 100px;
+    margin-left: 40px;
+    width: 250px;
+    flex-flow: column;
+    color: whitesmoke;
+    gap: 20px;
+}
+
+.liText {
+    font-size: larger;
+}
+
+.indicator{
+    float: right;
+}
+
+.notyBox{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 100%;
+    width: 350px;
+    border: 1px solid gray;
+    overflow: auto;
+    display: flex;
+    flex-flow: column;
+}
+
+.notyWrapper {
+    height: 50px;
+    color: whitesmoke;
+    margin: 5px;
+    border: 1px solid hotpink;
+    border-radius: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.roundCounter{
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    color: whitesmoke;
+    font-size: x-large;
+}
+.counterBack{
+    width: 800px;
+    height: 800px;
+    background-color: rgb(3 167 255 / 75%);
+    border: 1px solid gray;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    font-size: 150px;
+    color: whitesmoke;
+    z-index: 110;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.map{
+    width: 800px;
+    height: 800px;
+    background-color: rgb(143, 143, 143);
+    border: 1px solid gray;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    z-index: 1;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 2px;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #ff7551;
+    border-radius: 10px;
+}

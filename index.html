@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P2P_Game</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/a26f6e4ee4.js"></script>
+
+    <link rel="stylesheet" href="powerUp.css">
+    <link rel="stylesheet" href="map.css">
+    <link rel="stylesheet" href="players.css">
+    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="mob.css">
+
+    <script src="powerUps.js"></script>
+    <script src="menu.js"></script>
+    <script src="settings.js"></script>
+    <script src="gameLoop.js"></script>
+    <script src="mobs.js"></script>
+    <script src="sounds.js"></script>
+    <script src="inits.js"></script>
+
+</head>
+<body>
+    <div class="playerStatWrapper">
+        <div class="statWrapper playerOneStatWrapper">
+            <h3 contenteditable="true" class="playerOneName">Player One</h3>
+            <ul>
+                <li>
+                    <span class="liText">Health: </span><span class="indicator health">100</span>
+                </li>
+                <li>
+                    <span class="liText">Strength: </span><span class="indicator pushStrength">5</span>
+                </li>
+                <li>
+                    <span class="liText">Grow: </span><span class="indicator growAmount">20</span>
+                </li>
+                <li>
+                    <span class="liText">Attack: </span><span class="indicator strength">500</span>
+                </li>
+                <li>
+                    <span class="liText">Speed: </span><span class="indicator moveStep">0.5</span>
+                </li>
+                <li>
+                    <span class="liText">Wins: </span><span class="indicator wins">0</span>
+                </li>
+            </ul>
+        </div>
+        <div class="statWrapper playerTwoStatWrapper">
+            <h3 contenteditable="true" class="playerTwoName">Player Two</h3>
+            <ul>
+                <li>
+                    <span class="liText">Health: </span><span class="indicator health">100</span>
+                </li>
+                <li>
+                    <span class="liText">Strength: </span><span class="indicator pushStrength">5</span>
+                </li>
+                <li>
+                    <span class="liText">Grow: </span><span class="indicator growAmount">20</span>
+                </li>
+                <li>
+                    <span class="liText">Attack: </span><span class="indicator strength">500</span>
+                </li>
+                <li>
+                    <span class="liText">Speed: </span><span class="indicator moveStep">0.5</span>
+                </li>
+                <li>
+                    <span class="liText">Wins: </span><span class="indicator wins">0</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="roundCounter">Round 1</div>
+    <div class="counterBack" style="display: none;">10</div>
+    <div class="mapCover">
+
+        <div class="gameMenu">
+            <h2 class="gameName">Pusher</h2>
+            <div class="gameMenuButtons">
+                <button class="menuButton localPlay">Local</button>
+                <button class="menuButton singlePlayer">Single</button>
+                <button class="menuButton multiPlayer">Multi</button>
+                <button class="menuButton settings">Settings</button>
+            </div>
+        </div>
+
+    </div>
+    <section class="map">
+        <div startPos="left:250px;top:350px" style="left:250px;top:350px;" name="Player One" id="playerOne" class="player playerOne">
+            <div class="hpBar"></div>
+        </div>
+        <div startPos="left:500px;top:350px" style="left:500px;top:350px;" name="Player Two" id="playerTwo" class="player playerTwo">
+            <div class="hpBar"></div>
+        </div>
+    </section>
+
+    <div class="notyBox">
+        
+    </div>
+
+</body>
+</html>
