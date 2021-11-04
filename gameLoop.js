@@ -27,46 +27,56 @@ function resetStats(){
     playerOne.moveStep      = 1.5;
     playerOne.pushStrength  = 5;
     playerOne.growAmount    = 20;
-    playerOne.health        = 100;
+    playerOne.maxHP         = 100;
+    playerOne.health        = playerOne.maxHP;
     playerOne.lastAtkMs     = 0;
     playerOne.attackSpeed   = 500;
+    playerOne.level         = 1;
 
     playerTwo.moveStep      = 1.5;
     playerTwo.pushStrength  = 5;
     playerTwo.growAmount    = 20;
-    playerTwo.health        = 100;
+    playerTwo.maxHP         = 100;
+    playerTwo.health        = playerOne.playerTwo;
     playerTwo.lastAtkMs     = 0;
     playerTwo.attackSpeed   = 500;
+    playerTwo.level         = 1;
 }
 
 var playerOne = {
     name    : "Player One",
     moveStep: 1.5,
     id      : "#playerOne",
-    x       : 250,
+    x       : 500,
     y       : 350,
     isAlive : true,
     wins         : 0,
+    deaths       : 0,
     pushStrength : 5,
     growAmount   : 20,
     health       : 100,
+    maxHP        : 100,
     lastAtkMs    : 0,
-    attackSpeed  : 500
+    attackSpeed  : 500,
+    level        : 1
 };
 
 var playerTwo = {
     name    : "Player Two",
     moveStep: 1.5,
     id      : "#playerTwo",
-    x       : 500,
+    x       : 250,
     y       : 350,
     isAlive : true,
     wins         : 0,
+    deaths       : 0,
     pushStrength : 5,
     growAmount   : 20,
     health       : 100,
+    maxHP        : 100,
     lastAtkMs    : 0,
-    attackSpeed  : 500
+    attackSpeed  : 500,
+    level        : 1
 };
 
 var lastStatDisplay = 0;
@@ -168,23 +178,22 @@ function addNoty(text){
 function pushByMoveOtherPlayer(playerObj,otherPlayerObj){
     let playerPos       =   $(playerObj.id).position();
     let otherPlayerPos  =   $(otherPlayerObj.id).position();
-    let lastPos         =   otherPlayerPos;
-    if( playerPos.top < otherPlayerPos.top ){
+    if( playerPos.top <= otherPlayerPos.top ){
         //console.log("Other player is below");
         otherPlayerPos.top = otherPlayerPos.top + 5;
         playerPos.top = playerPos.top - 10;
     }
-    if( playerPos.left < otherPlayerPos.left ){
+    if( playerPos.left <= otherPlayerPos.left ){
         //console.log("Other player is to the right");
         otherPlayerPos.left = otherPlayerPos.left + 5;
         playerPos.left = playerPos.left - 10;
     }
-    if( playerPos.top > otherPlayerPos.top ){
+    if( playerPos.top >= otherPlayerPos.top ){
         //console.log("Other player is above");
         otherPlayerPos.top = otherPlayerPos.top - 5;
         playerPos.top = playerPos.top + 10;
     }
-    if( playerPos.left > otherPlayerPos.left ){
+    if( playerPos.left >= otherPlayerPos.left ){
         //console.log("Other player is to the left");
         otherPlayerPos.left = otherPlayerPos.left - 5;
         playerPos.left = playerPos.left + 10;
@@ -240,7 +249,7 @@ function removeAllMobs(){
 
 function addHealth(playerObj,amount){
     playerObj.health = playerObj.health + amount;
-    if( playerObj.health > 100 ){playerObj.health = 100;}
+    if( playerObj.health > playerObj.maxHP ){playerObj.health = playerObj.maxHP;}
     let difHp = 100 - playerObj.health
     $(playerObj.id).find(".hpBar").css("background",`linear-gradient(to right, tomato ${playerObj.health}%, white ${difHp}%)`);
 }
@@ -253,6 +262,8 @@ function lowerHpBy(damagedPlayer,playerObj){
     if(damagedPlayer.health <= 0){damagedPlayer.health = 0; difHp = 100;}
     $(damagedPlayer.id).find(".hpBar").css("background",`linear-gradient(to right, tomato ${damagedPlayer.health}%, white ${difHp}%)`);
     if(difHp >= 100){
+        unLupPlayer(damagedPlayer);
+        damagedPlayer.deaths = damagedPlayer.deaths + 1;
         resetPlayerPosition(damagedPlayer,playerObj);
         roundEnd();
     }
@@ -324,6 +335,11 @@ function attack(playerObj,otherPlayerObj){
     }
 }
 
+function getRandomColor(){
+    let color = Math.floor(Math.random()*16777215).toString(16);
+    return "#"+color;
+}
+
 function addPowerUpToPlayer(type,playerObj){
     if( type == "strength" ){
         playerObj.pushStrength = playerObj.pushStrength + 5;
@@ -335,7 +351,7 @@ function addPowerUpToPlayer(type,playerObj){
         playerObj.growAmount = playerObj.growAmount + 5;
         addPlayerText($(playerObj.id),"Muhaha");
     }else if( type == "color" ){
-        playerObj.color = "";
+        $(playerObj.id).css("background-color",getRandomColor());
     }else if( type == "speed" ){
         playerObj.moveStep = playerObj.moveStep + 0.5;
         addPlayerText($(playerObj.id),"Me speed");
@@ -350,22 +366,30 @@ function addPowerUpToPlayer(type,playerObj){
 
 function checkPowerUpCollision(){
     $('.powerup').each(function(i, obj) {
+        let powerUpElem = this;
         if(playerOne.isAlive){
-            if( playerOverlaps($(playerOne.id),this) ){
-                let type = $(this).attr("type");
+            if( playerOverlaps($(playerOne.id),powerUpElem) ){
+                let type = $(powerUpElem).attr("type");
                 addPowerUpToPlayer(type,playerOne);
-                $(this).hide("fast").remove();
+                $(powerUpElem).hide("fast").remove();
                 //return false;
             }
         }
         if(playerTwo.isAlive){
-            if( playerOverlaps($(playerTwo.id),this) ){
-                let type = $(this).attr("type");
+            if( playerOverlaps($(playerTwo.id),powerUpElem) ){
+                let type = $(powerUpElem).attr("type");
                 addPowerUpToPlayer(type,playerTwo);
-                $(this).hide("fast").remove();
+                $(powerUpElem).hide("fast").remove();
                 //return false;
             }
         }
+        $('.mob').each(function(i, obj) {
+            if( $(this).hasClass("eater") ){
+                if( playerOverlaps($(this),powerUpElem) ){
+                    $(powerUpElem).hide("fast").remove();
+                }
+            }
+        });
     });
 }
 
@@ -413,6 +437,29 @@ function checkMapCollision(){
     }
 }
 
+function pushPlayerOnMobCollision(playerObj,mobElem){
+    let playerPos   =   $(playerObj.id).position();
+    let mobPos      =   mobElem.position();
+    if( playerPos.top <= mobPos.top ){
+        playerPos.top = playerPos.top - 15;
+    }
+    if( playerPos.left <= mobPos.left ){
+        playerPos.left = playerPos.left - 15;
+    }
+    if( playerPos.top >= mobPos.top ){
+        playerPos.top = playerPos.top + 15;
+    }
+    if( playerPos.left >= mobPos.left ){
+        playerPos.left = playerPos.left + 15;
+    }
+    addPlayerText($(playerObj.id),getRandomCurseWord());
+    
+    playerObj.x = playerPos.left;
+    playerObj.y = playerPos.top;
+    $(playerObj.id).stop();
+    $(playerObj.id).animate({ left: playerPos.left+"px",top:playerPos.top+"px" });
+}
+
 var lastMobPlayerOverlapCheckMS = 0;
 function checkMobCollision(){
     let now = new Date().getTime();
@@ -425,6 +472,7 @@ function checkMobCollision(){
                     addNoty(` ${playerOne.name} hit by ${$(this).attr("name")} `);
                     playSound("ouch");
                     damagePlayer(playerOne,$(this));
+                    pushPlayerOnMobCollision(playerOne,$(this));
                 }
             }
             if(playerTwo.isAlive){
@@ -433,6 +481,7 @@ function checkMobCollision(){
                     addNoty(` ${playerTwo.name} hit by ${$(this).attr("name")} `);
                     playSound("ouch");
                     damagePlayer(playerTwo,$(this));
+                    pushPlayerOnMobCollision(playerTwo,$(this));
                 }
             }
         });

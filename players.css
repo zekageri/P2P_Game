@@ -23,10 +23,20 @@
     background: linear-gradient(to right, tomato 100%, white 0%);
 }
 
-.playerTextBubble{
+.name{
     position: absolute;
     top: -25px;
     left: -15px;
+    width: 100px;
+    height: 5px;
+    color: lightgray;
+    opacity: 0.8;
+}
+
+.playerTextBubble{
+    position: absolute;
+    top: -40px;
+    left: -25px;
     width: auto;
     min-height: 20px;
     text-align: center;
