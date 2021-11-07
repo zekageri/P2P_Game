@@ -37,7 +37,7 @@ function resetStats(){
     playerTwo.pushStrength  = 5;
     playerTwo.growAmount    = 20;
     playerTwo.maxHP         = 100;
-    playerTwo.health        = playerOne.playerTwo;
+    playerTwo.health        = playerTwo.maxHP;
     playerTwo.lastAtkMs     = 0;
     playerTwo.attackSpeed   = 500;
     playerTwo.level         = 1;
